@@ -1,2 +1,2 @@
-# Project Starter Code
-Flask with Login Capabilities
+# Capstone Project - Group 15
+Rushell Mckenzie </> Trishaun Blake </> Hakeem Clarke </> Nicoy Caine
