@@ -38,7 +38,7 @@ def login():
             username = form.username.data
             password = form.password.data
             
-            user = UserProfile.query.filter_by(username=username,password=password).first()
+            user = User.query.filter_by(username=username,password=password).first()
             if user is None:
                 flash("Sorry, there is no such user.","warning")
             else:
@@ -46,7 +46,7 @@ def login():
 
                 # remember to flash a message to the user
                 
-                return redirect(url_for("secure_page")) 
+                return redirect(url_for("dashboard")) 
     return render_template("login.html", form=form)
     
     
@@ -58,18 +58,18 @@ def logout():
     return redirect(url_for("home"))
     
 
-@app.route('/secure-page')
+@app.route('/dashboard/portfolio')
 @login_required
-def secure_page():
-    flash("You were logged in!", "success")
-    return render_template('secure_page.html')
+def dashboard():
+    flash("Welcome back", "success")
+    return render_template('portfolio.html')
     
     
 # user_loader callback. This callback is used to reload the user object from
 # the user ID stored in the session
 @login_manager.user_loader
 def load_user(id):
-    return UserProfile.query.get(int(id))
+    return User.query.get(int(id))
 
 ###
 # The functions below should be applicable to all Flask apps.
