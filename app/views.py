@@ -62,7 +62,7 @@ def logout():
 @login_required
 def dashboard():
     flash("Welcome back", "success")
-    return render_template('portfolio.html')
+    return render_template('dashboard/portfolio.html')
     
     
 # user_loader callback. This callback is used to reload the user object from
