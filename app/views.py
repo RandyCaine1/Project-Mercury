@@ -82,19 +82,13 @@ def analyst():
     """ Render AI Analyst Page"""
     return render_template('dashboard/ai.html')
     
-@app.route('/dashboard/stocks')
-@login_required
-def stocks():
-    """ Render Stock Page"""
-    return render_template('dashboard/stock.html')
-    
-@app.route('/dashboard/stocks/technical')
+@app.route('/dashboard/technical')
 @login_required
 def tech():
     """ Render Technical Analysis Stock Page"""
     return render_template('dashboard/technical.html')
 
-@app.route('/dashboard/stocks/fundametal')
+@app.route('/dashboard/fundametal')
 @login_required
 def fund():
     """ Render Fundamental Analysis Stock Page"""

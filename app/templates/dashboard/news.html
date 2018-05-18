@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Mercury - Dashboard</title>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Bootstrap core CSS-->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom fonts for this template-->
+  <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+  <!-- Custom styles for this template-->
+  <link href="../static/css/dashboard.css" rel="stylesheet">
+  <!-- Favicon -->
+  <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+
+<body class="fixed-nav merc-dark" id="page-top">
+  <!-- Navigation-->
+  <nav class="navbar navbar-expand-lg navbar-dark merc-dark fixed-top" id="mainNav">
+    <a class="navbar-brand" href="{{ url_for('home') }}">Mercury</a>
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    
+    <!-- Side Navbar-->
+    <div class="collapse navbar-collapse" id="navbarResponsive">
+        
+      <!--Navbar Options -->
+      <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Portfolio">
+          <a class="nav-link" href="{{ url_for('dashboard') }}">
+            <i class="fa fa-usd" aria-hidden="true"></i>
+            <span class="nav-link-text">Portfolio</span>
+          </a>
+        </li>
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Stock Heat Map">
+          <a class="nav-link" href="{{ url_for('heatmap') }}">
+            <i class="fa fa-fire" aria-hidden="true"></i>
+            <span class="nav-link-text">Stock Heat Map</span>
+          </a>
+        </li>
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Sectors">
+          <a class="nav-link" href="{{ url_for('sector') }}">
+            <i class="fa fa-line-chart" aria-hidden="true"></i>
+            <span class="nav-link-text">Sectors</span>
+          </a>
+        </li>
+        
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="AI Analyst">
+          <a class="nav-link" href="{{ url_for('analyst') }}">
+            <i class="fa fa-superpowers" aria-hidden="true"></i>
+            <span class="nav-link-text">AI Analyst</span>
+          </a>
+        </li>
+        
+        <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Sectors">
+          <a class="nav-link" href="{{ url_for('news') }}">
+            <i class="fa fa-line-chart" aria-hidden="true"></i>
+            <span class="nav-link-text">News</span>
+          </a>
+        </li>
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Stocks">
+          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseComponents" data-parent="#exampleAccordion">
+            <i class="fa fa-fw fa-area-chart"></i>
+            <span class="nav-link-text">Stocks</span>
+          </a>
+          <ul class="sidenav-second-level collapse" id="collapseComponents">
+            <li>
+              <a href="{{ url_for('tech') }}">Technical Analysis</a>
+            </li>
+            <li>
+              <a href="{{ url_for('fund') }}">Fundamental Analysis</a>
+            </li>
+          </ul>
+        </li>
+        
+      </ul>
+      
+      <!-- Toggle Arrow-->
+      <ul class="navbar-nav sidenav-toggler">
+        <li class="nav-item">
+          <a class="nav-link text-center" id="sidenavToggler">
+            <i class="fa fa-fw fa-angle-left"></i>
+          </a>
+        </li>
+      </ul>
+      
+      <ul class="navbar-nav ml-auto">
+       
+        <!-- Navbar Icons -->
+        <li class="nav-item dropdown">
+          
+          <!-- User Administration -->
+          <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+          </a>
+          
+          <div class="dropdown-menu" aria-labelledby="alertsDropdown">
+            <h6 class="dropdown-header">Administration</h6>
+             
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ url_for('profile') }}">
+              <span class="text-dark">
+                <strong>
+                  <i class="fa fa-user-o" aria-hidden="true"></i> Profile</strong>
+              </span>
+              <div class="dropdown-message small">Update your profile</div>
+            </a>
+            
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ url_for('settings') }}">
+              <span class="text-dark">
+                <strong>
+                  <i class="fa fa-cog" aria-hidden="true"></i></i> Settings</strong>
+              </span>
+              <div class="dropdown-message small">Change settings</div>
+            </a>
+            
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ url_for('help_page') }}">
+              <span class="text-dark">
+                <strong>
+                  <i class="fa fa-question-circle-o" aria-hidden="true"></i> Help</strong>
+              </span>
+              <div class="dropdown-message small">Useful tips</div>
+            </a>
+            
+            
+          </div>
+          
+        </li>
+        
+        <!-- Logout Button-->
+        <li class="nav-item">
+          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
+            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
+        </li>
+
+      </ul>
+    </div>
+    
+  </nav>
+  <div class="content-wrapper">
+    
+    
+    <!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    
+    <!-- Bootstrap core JavaScript-->
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
+  
+    <!-- Custom JS -->
+    <script src="../static/js/app.js"></script>
+   
+  </div>
+</body>
+
+
+</html>

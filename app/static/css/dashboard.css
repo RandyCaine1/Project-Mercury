@@ -417,3 +417,8 @@ footer.sticky-footer {
     background: #343a40;
   }
 }
+
+
+.active-option {
+  background-color: #495057;
+}
