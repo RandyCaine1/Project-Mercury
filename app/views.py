@@ -43,8 +43,6 @@ def login():
                 flash("Sorry, there is no such user.","warning")
             else:
                 login_user(user)
-
-                # remember to flash a message to the user
                 
                 return redirect(url_for("dashboard")) 
     return render_template("login.html", form=form)
