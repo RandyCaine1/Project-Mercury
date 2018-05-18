@@ -98,15 +98,32 @@ def tech():
 @login_required
 def fund():
     """ Render Fundamental Analysis Stock Page"""
-    return render_template('dashboard/fundametal.html')
+    return render_template('dashboard/fundamental.html')
     
 @app.route('/dashboard/news')
 @login_required
 def news():
-    """ Render News"""
+    """ Render News Page"""
     return render_template('dashboard/news.html')
+
+@app.route('/admin/profile')
+@login_required
+def profile():
+    """ Render Profile Page"""
+    return render_template('admin/profile.html')
+
+@app.route('/admin/settings')
+@login_required
+def settings():
+    """ Render Settings Page"""
+    return render_template('admin/settings.html')
     
-    
+@app.route('/admin/help')
+@login_required
+def help_page():
+    """ Render Help Page"""
+    return render_template('admin/help.html')
+   
 # user_loader callback. This callback is used to reload the user object from
 # the user ID stored in the session
 @login_manager.user_loader

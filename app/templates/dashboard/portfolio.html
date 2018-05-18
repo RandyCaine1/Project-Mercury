@@ -20,7 +20,7 @@
 <body class="fixed-nav merc-dark" id="page-top">
   <!-- Navigation-->
   <nav class="navbar navbar-expand-lg navbar-dark merc-dark fixed-top" id="mainNav">
-    <a class="navbar-brand" href="index.html">Mercury</a>
+    <a class="navbar-brand" href="{{ url_for('home') }}">Mercury</a>
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -31,21 +31,21 @@
       <!--Navbar Options -->
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
         <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Portfolio">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="{{ url_for('dashboard') }}">
             <i class="fa fa-usd" aria-hidden="true"></i>
             <span class="nav-link-text">Portfolio</span>
           </a>
         </li>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Stock Heat Map">
-          <a class="nav-link" href="charts.html">
+          <a class="nav-link" href="{{ url_for('heatmap') }}">
             <i class="fa fa-fire" aria-hidden="true"></i>
             <span class="nav-link-text">Stock Heat Map</span>
           </a>
         </li>
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Sectors">
-          <a class="nav-link" href="tables.html">
+          <a class="nav-link" href="{{ url_for('sector') }}">
             <i class="fa fa-line-chart" aria-hidden="true"></i>
             <span class="nav-link-text">Sectors</span>
           </a>
@@ -53,9 +53,16 @@
         
         
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="AI Analyst">
-          <a class="nav-link" href="index.html">
+          <a class="nav-link" href="{{ url_for('analyst') }}">
             <i class="fa fa-superpowers" aria-hidden="true"></i>
             <span class="nav-link-text">AI Analyst</span>
+          </a>
+        </li>
+        
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Sectors">
+          <a class="nav-link" href="{{ url_for('news') }}">
+            <i class="fa fa-line-chart" aria-hidden="true"></i>
+            <span class="nav-link-text">News</span>
           </a>
         </li>
         
@@ -66,35 +73,13 @@
           </a>
           <ul class="sidenav-second-level collapse" id="collapseComponents">
             <li>
-              <a href="navbar.html">Technical Analysis</a>
+              <a href="{{ url_for('tech') }}">Technical Analysis</a>
             </li>
             <li>
-              <a href="cards.html">Fundamental Analysis</a>
+              <a href="{{ url_for('fund') }}">Fundamental Analysis</a>
             </li>
           </ul>
         </li>
-        
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="News">
-          <a class="nav-link nav-link-collapse collapsed" data-toggle="collapse" href="#collapseExamplePages" data-parent="#exampleAccordion">
-            <i class="fa fa-newspaper-o" aria-hidden="true"></i>
-            <span class="nav-link-text">News</span>
-          </a>
-          <ul class="sidenav-second-level collapse" id="collapseExamplePages">
-            <li>
-              <a href="login.html">Login Page</a>
-            </li>
-            <li>
-              <a href="register.html">Registration Page</a>
-            </li>
-            <li>
-              <a href="forgot-password.html">Forgot Password Page</a>
-            </li>
-            <li>
-              <a href="blank.html">Blank Page</a>
-            </li>
-          </ul>
-        </li>
-        
         
       </ul>
       
@@ -121,7 +106,7 @@
             <h6 class="dropdown-header">Administration</h6>
              
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="{{ url_for('profile') }}">
               <span class="text-dark">
                 <strong>
                   <i class="fa fa-user-o" aria-hidden="true"></i> Profile</strong>
@@ -130,7 +115,7 @@
             </a>
             
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="{{ url_for('settings') }}">
               <span class="text-dark">
                 <strong>
                   <i class="fa fa-cog" aria-hidden="true"></i></i> Settings</strong>
@@ -139,7 +124,7 @@
             </a>
             
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="{{ url_for('help_page') }}">
               <span class="text-dark">
                 <strong>
                   <i class="fa fa-question-circle-o" aria-hidden="true"></i> Help</strong>
@@ -178,7 +163,7 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-danger" href="login.html">Logout</a>
+            <a class="btn btn-danger" href="{{ url_for('logout') }}">Logout</a>
           </div>
         </div>
       </div>
