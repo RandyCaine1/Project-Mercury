@@ -29,6 +29,7 @@ def about():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
+    """Log in"""
     #Initialization
     form = LoginForm()
     if request.method == "POST":
@@ -51,6 +52,7 @@ def login():
 @app.route('/logout')
 @login_required
 def logout():
+    """Log out"""
     logout_user()
     flash("You were logged out.", "success")
     return redirect(url_for("home"))
@@ -59,8 +61,50 @@ def logout():
 @app.route('/dashboard/portfolio')
 @login_required
 def dashboard():
-    flash("Welcome back", "success")
+    """ Render Portfolio"""
     return render_template('dashboard/portfolio.html')
+    
+@app.route('/dashboard/heatmap')
+@login_required
+def heatmap():
+    """ Render Heat Map"""
+    return render_template('dashboard/heatmap.html')
+    
+@app.route('/dashboard/sectors')
+@login_required
+def sector():
+    """ Render Sectors Page"""
+    return render_template('dashboard/sector.html')
+    
+@app.route('/dashboard/analyst')
+@login_required
+def analyst():
+    """ Render AI Analyst Page"""
+    return render_template('dashboard/ai.html')
+    
+@app.route('/dashboard/stocks')
+@login_required
+def stocks():
+    """ Render Stock Page"""
+    return render_template('dashboard/stock.html')
+    
+@app.route('/dashboard/stocks/technical')
+@login_required
+def tech():
+    """ Render Technical Analysis Stock Page"""
+    return render_template('dashboard/technical.html')
+
+@app.route('/dashboard/stocks/fundametal')
+@login_required
+def fund():
+    """ Render Fundamental Analysis Stock Page"""
+    return render_template('dashboard/fundametal.html')
+    
+@app.route('/dashboard/news')
+@login_required
+def news():
+    """ Render News"""
+    return render_template('dashboard/news.html')
     
     
 # user_loader callback. This callback is used to reload the user object from
