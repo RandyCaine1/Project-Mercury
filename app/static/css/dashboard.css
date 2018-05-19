@@ -3,10 +3,6 @@ html {
   min-height: 100%;
 }
 
-body {
-  overflow-x: hidden;
-}
-
 body.sticky-footer {
   margin-bottom: 56px;
 }
@@ -355,6 +351,12 @@ footer.sticky-footer {
 
 /* Custom CSS */
 
+/* Font */
+body {
+  overflow-x: hidden;
+  font-family: 'Titillium Web', sans-serif;
+}
+
 /* Content Background*/
 .content-wrapper {
   background-color: #333333;
@@ -422,3 +424,4 @@ footer.sticky-footer {
 .active-option {
   background-color: #495057;
 }
+
