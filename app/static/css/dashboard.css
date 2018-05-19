@@ -425,3 +425,12 @@ body {
   background-color: #495057;
 }
 
+.dropdown-item {
+  cursor: pointer;
+}
+
+.dropdown-item:focus{
+  color: white;
+  background-color: #181818 !important;
+}
+

@@ -101,7 +101,7 @@
           
           <!-- User Administration -->
           <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            <i class="fa fa-user-circle-o" aria-hidden="true"></i>
+            <i class="fa fa-user-circle-o" aria-hidden="true"> {{ current_user.username }}</i>
           </a>
           
           <div class="dropdown-menu" aria-labelledby="alertsDropdown">
@@ -134,16 +134,21 @@
               <div class="dropdown-message small">Useful tips</div>
             </a>
             
+            <!-- Logout Button-->
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">
+              <span class="text-dark">
+                <strong>
+                  <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>Logout</strong>
+              </span>
+            </a>
             
+           
           </div>
           
         </li>
         
-        <!-- Logout Button-->
-        <li class="nav-item">
-          <a class="nav-link" data-toggle="modal" data-target="#exampleModal">
-            <i class="fa fa-fw fa-sign-out"></i>Logout</a>
-        </li>
+       
 
       </ul>
     </div>
