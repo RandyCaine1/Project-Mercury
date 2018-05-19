@@ -147,6 +147,7 @@ textarea {
 .button-block {
   display: block;
   width: 100%;
+  cursor:pointer;
 }
 .forgot {
   margin-top: -20px;

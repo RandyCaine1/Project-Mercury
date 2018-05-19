@@ -8,7 +8,7 @@ This file creates your application.
 from app import app, db, login_manager
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
-from forms import LoginForm
+from forms import LoginForm, SignUpForm
 from models import User
 from app.models import *
 
@@ -29,11 +29,27 @@ def about():
 
 @app.route("/login", methods=["GET", "POST"])
 def login():
-    """Log in"""
+    """Log in Or Sign Up"""
     #Initialization
     form = LoginForm()
+    sform = SignUpForm()
     if request.method == "POST":
       
+        if sform.validate_on_submit():
+            firstname = sform.firstname.data
+            lastname = sform.lastname.data
+            username = sform.username.data
+            email = sform.email.data
+            password = sform.password.data
+            
+            # Add to database
+            user = User(firstname = firstname,lastname = lastname,email = email,username = username,password = password)
+            db.create_all()
+            db.session.add(user)
+            db.session.commit()
+            login_user(user)
+            return redirect(url_for("dashboard"))
+            
         if form.validate_on_submit():
             
             username = form.username.data
@@ -44,9 +60,12 @@ def login():
                 flash("Sorry, there is no such user.","warning")
             else:
                 login_user(user)
-                
                 return redirect(url_for("dashboard")) 
-    return render_template("login.html", form=form)
+                
+        
+            
+   
+    return render_template("login.html", form=form,sform=sform)
     
     
 @app.route('/logout')

@@ -28,20 +28,22 @@
           <h1>Sign Up for Free</h1>
           
           
-          <form action="/" method="post">
+          <form action="{{ url_for('login') }}" class = "form" method="post">
+            {{ sform.csrf_token }}
+            
               <div class="top-row">
                 <div class="field-wrap">
                   <label>
                     First Name<span class="req">*</span>
                   </label>
-                  <input type="text" required autocomplete="off" />
+                 {{ sform.firstname(class='form-control') }}
               </div>
             
                 <div class="field-wrap">
                   <label>
                     Last Name<span class="req">*</span>
                   </label>
-                  <input type="text"required autocomplete="off"/>
+                 {{ sform.lastname(class='form-control') }}
                 </div>
               </div>
     
@@ -49,14 +51,21 @@
                 <label>
                   Email Address<span class="req">*</span>
                 </label>
-                <input type="email"required autocomplete="off"/>
+                {{ sform.email(class='form-control') }}
               </div>
               
               <div class="field-wrap">
                 <label>
-                  Set A Password<span class="req">*</span>
+                  Username<span class="req">*</span>
                 </label>
-                <input type="password"required autocomplete="off"/>
+                {{ sform.username(class='form-control') }}
+              </div>
+              
+              <div class="field-wrap">
+                <label>
+                  Password<span class="req">*</span>
+                </label>
+                {{ sform.password(class='form-control') }}
               </div>
               
               <button type="submit" class="button button-block"/>Get Started</button>

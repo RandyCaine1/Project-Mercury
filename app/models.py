@@ -2,9 +2,12 @@ from . import db
 
 class User(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    firstname =  db.Column(db.String(255))
+    lastname =  db.Column(db.String(255))
+    email = db.Column(db.String(80))
     username = db.Column(db.String(80), unique=True)
     password = db.Column(db.String(255))
-    email = db.Column(db.String(80))
+    
 
     def is_authenticated(self):
         return True
