@@ -1,25 +1,19 @@
-{% extends "base.html" %}
+<!DOCTYPE>
 
-{% block main %}
-  <!--<div class="login-form center-block">-->
-  <!--  <h2>Please Log in</h2>-->
-  <!--  </br>-->
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
     
-  <!--  <form action="{{ url_for('login') }}" method="post">-->
-  <!--    {{ form.csrf_token }}-->
-  <!--    <div class="form-group">-->
-  <!--      {{ form.username.label }}-->
-  <!--      {{ form.username(class='form-control', placeholder="Enter your username") }}-->
-  <!--    </div>-->
-  <!--    <div class="form-group">-->
-  <!--      {{ form.password.label }}-->
-  <!--      {{ form.password(class='form-control', placeholder = "Enter your password") }}-->
-  <!--    </div>-->
-  <!--    <button type="submit" name="submit" class="btn btn-primary btn-block">Log in</button>-->
-  <!--  </form>-->
-  <!--</div>-->
-  
-  
+    
+    <title>Mercury | Stock Analysis</title>
+    <link type = "text/css" rel = "stylesheet" href = "../static/css/login.css">
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+    
+</head>
+
+<body>
   <div class="form">
       
       <ul class="tab-group">
@@ -98,5 +92,14 @@
         
       </div><!-- tab-content -->
       
+      <!-- Core JavaScript-->
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+      <script src = "../static/js/login.js"></script>
+</body>
+  
+  
+</html>
+
+      
 </div> <!-- /form -->
-{% endblock %}
+
