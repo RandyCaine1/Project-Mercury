@@ -1,0 +1,14 @@
+/*Settings Form*/
+
+.settings-option {
+    width: 20%;
+}
+
+
+.back-btn {
+    text-align: center;
+}
+
+.back-btn:hover {
+    color: white;
+}

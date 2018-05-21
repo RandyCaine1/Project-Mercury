@@ -8,14 +8,22 @@ This file creates your application.
 from app import app, db, login_manager
 from flask import render_template, request, redirect, url_for, flash
 from flask_login import login_user, logout_user, current_user, login_required
-from forms import LoginForm, SignUpForm
-from models import User
+from forms import *
+from models import *
 from app.models import *
+import requests
+import json
+import datetime
 
 
 ###
 # Routing for your application.
 ###
+
+# Stock symbols
+dow = ['AXP', 'AAPL', 'BA', 'CAT', 'CSCO', 'CVX', 'XOM', 'GE', 'GS', 'HD', 'IBM', 'INTC', 'JNJ', 'KO', 'JPM', 'MCD', 'MMM', 'MRK', 'MSFT', 'NKE', 'PFE', 'PG', 'TRV', 'UNH', 'UTX', 'VZ', 'V', 'WMT', 'DIS', 'DWDP']
+SP500 =  ['A', 'AA', 'AAPL', 'ABC', 'ABT', 'ACE', 'ACN', 'ADBE', 'ADI', 'ADM', 'ADP', 'ADSK', 'ADT', 'AEE', 'AEP', 'AES', 'AET', 'AFL', 'AGN', 'AIG', 'AIV', 'AIZ', 'AKAM', 'ALL', 'ALTR', 'ALXN', 'AMAT', 'AMD', 'AMGN', 'AMP', 'AMT', 'AMZN', 'AN', 'ANF', 'AON', 'APA', 'APC', 'APD', 'APH', 'APOL', 'ARG', 'ATI', 'AVB', 'AVP', 'AVY', 'AXP', 'AZO', 'BA', 'BAC', 'BAX', 'BBBY', 'BBT', 'BBY', 'BCR', 'BDX', 'BEAM', 'BEN', 'BF.B', 'BHI', 'BIG', 'BIIB', 'BK', 'BLK', 'BLL', 'BMC', 'BMS', 'BMY', 'BRCM', 'BRK.B', 'BSX', 'BTU', 'BWA', 'BXP', 'C', 'CA', 'CAG', 'CAH', 'CAM', 'CAT', 'CB', 'CBG', 'CBS', 'CCE', 'CCI', 'CCL', 'CELG', 'CERN', 'CF', 'CFN', 'CHK', 'CHRW', 'CI', 'CINF', 'CL', 'CLF', 'CLX', 'CMA', 'CMCSA', 'CME', 'CMG', 'CMI', 'CMS', 'CNP', 'CNX', 'COF', 'COG', 'COH', 'COL', 'COP', 'COST', 'COV', 'CPB', 'CRM', 'CSC', 'CSCO', 'CSX', 'CTAS', 'CTL', 'CTSH', 'CTXS', 'CVC', 'CVH', 'CVS', 'CVX', 'D', 'DD', 'DE', 'DELL', 'DF', 'DFS', 'DG', 'DGX', 'DHI', 'DHR', 'DIS', 'DISCA', 'DLTR', 'DNB', 'DNR', 'DO', 'DOV', 'DOW', 'DPS', 'DRI', 'DTE', 'DTV', 'DUK', 'DVA', 'DVN', 'EA', 'EBAY', 'ECL', 'ED', 'EFX', 'EIX', 'EL', 'EMC', 'EMN', 'EMR', 'EOG', 'EQR', 'EQT', 'ESRX', 'ESV', 'ETFC', 'ETN', 'ETR', 'EW', 'EXC', 'EXPD', 'EXPE', 'F', 'FAST', 'FCX', 'FDO', 'FDX', 'FE', 'FFIV', 'FHN', 'FII', 'FIS', 'FISV', 'FITB', 'FLIR', 'FLR', 'FLS', 'FMC', 'FOSL', 'FRX', 'FSLR', 'FTI', 'FTR', 'GAS', 'GCI', 'GD', 'GE', 'GILD', 'GIS', 'GLW', 'GME', 'GNW', 'GOOG', 'GPC', 'GPS', 'GS', 'GT', 'GWW', 'HAL', 'HAR', 'HAS', 'HBAN', 'HCBK', 'HCN', 'HCP', 'HD', 'HES', 'HIG', 'HNZ', 'HOG', 'HON', 'HOT', 'HP', 'HPQ', 'HRB', 'HRL', 'HRS', 'HSP', 'HST', 'HSY', 'HUM', 'IBM', 'ICE', 'IFF', 'IGT', 'INTC', 'INTU', 'IP', 'IPG', 'IR', 'IRM', 'ISRG', 'ITW', 'IVZ', 'JBL', 'JCI', 'JCP', 'JDSU', 'JEC', 'JNJ', 'JNPR', 'JOY', 'JPM', 'JWN', 'K', 'KEY', 'KIM', 'KLAC', 'KMB', 'KMI', 'KMX', 'KO', 'KR', 'KRFT', 'KSS', 'L', 'LEG', 'LEN', 'LH', 'LIFE', 'LLL', 'LLTC', 'LLY', 'LM', 'LMT', 'LNC', 'LO', 'LOW', 'LRCX', 'LSI', 'LTD', 'LUK', 'LUV', 'LYB', 'M', 'MA', 'MAR', 'MAS', 'MAT', 'MCD', 'MCHP', 'MCK', 'MCO', 'MDLZ', 'MDT', 'MET', 'MHP', 'MJN', 'MKC', 'MMC', 'MMM', 'MNST', 'MO', 'MOLX', 'MON', 'MOS', 'MPC', 'MRK', 'MRO', 'MS', 'MSFT', 'MSI', 'MTB', 'MU', 'MUR', 'MWV', 'MYL', 'NBL', 'NBR', 'NDAQ', 'NE', 'NEE', 'NEM', 'NFLX', 'NFX', 'NI', 'NKE', 'NOC', 'NOV', 'NRG', 'NSC', 'NTAP', 'NTRS', 'NU', 'NUE', 'NVDA', 'NWL', 'NWSA', 'NYX', 'OI', 'OKE', 'OMC', 'ORCL', 'ORLY', 'OXY', 'PAYX', 'PBCT', 'PBI', 'PCAR', 'PCG', 'PCL', 'PCLN', 'PCP', 'PCS', 'PDCO', 'PEG', 'PEP', 'PETM', 'PFE', 'PFG', 'PG', 'PGR', 'PH', 'PHM', 'PKI', 'PLD', 'PLL', 'PM', 'PNC', 'PNR', 'PNW', 'POM', 'PPG', 'PPL', 'PRGO', 'PRU', 'PSA', 'PSX', 'PWR', 'PX', 'PXD', 'QCOM', 'QEP', 'R', 'RAI', 'RDC', 'RF', 'RHI', 'RHT', 'RL', 'ROK', 'ROP', 'ROST', 'RRC', 'RRD', 'RSG', 'RTN', 'S', 'SAI', 'SBUX', 'SCG', 'SCHW', 'SE', 'SEE', 'SHW', 'SIAL', 'SJM', 'SLB', 'SLM', 'SNA', 'SNDK', 'SNI', 'SO', 'SPG', 'SPLS', 'SRCL', 'SRE', 'STI', 'STJ', 'STT', 'STX', 'STZ', 'SWK', 'SWN', 'SWY', 'SYK', 'SYMC', 'SYY', 'T', 'TAP', 'TDC', 'TE', 'TEG', 'TEL', 'TER', 'TGT', 'THC', 'TIE', 'TIF', 'TJX', 'TMK', 'TMO', 'TRIP', 'TROW', 'TRV', 'TSN', 'TSO', 'TSS', 'TWC', 'TWX', 'TXN', 'TXT', 'TYC', 'UNH', 'UNM', 'UNP', 'UPS', 'URBN', 'USB', 'UTX', 'V', 'VAR', 'VFC', 'VIAB', 'VLO', 'VMC', 'VNO', 'VRSN', 'VTR', 'VZ', 'WAG', 'WAT', 'WDC', 'WEC', 'WFC', 'WFM', 'WHR', 'WIN', 'WLP', 'WM', 'WMB', 'WMT', 'WPI', 'WPO', 'WPX', 'WU', 'WY', 'WYN', 'WYNN', 'X', 'XEL', 'XL', 'XLNX', 'XOM', 'XRAY', 'XRX', 'XYL', 'YHOO', 'YUM', 'ZION', 'ZMH']
+nasdaq = ['AAL', 'AAPL', 'ADBE', 'ADI', 'ADP', 'ADSK', 'AKAM', 'ALGN', 'ALXN', 'AMAT', 'AMGN', 'AMZN', 'ATVI', 'AVGO', 'BIDU', 'BIIB', 'BMRN', 'CA', 'CELG', 'CERN', 'CHKP', 'CHTR', 'CTRP', 'CTAS', 'CSCO', 'CTXS', 'CMCSA', 'COST', 'CSX', 'CTSH', 'DISCA', 'DISCK', 'DISH', 'DLTR', 'EA', 'EBAY', 'ESRX', 'EXPE', 'FAST', 'FB', 'FISV', 'FOX', 'FOXA', 'GILD', 'GOOG', 'GOOGL', 'HAS', 'HSIC', 'HOLX', 'ILMN', 'INCY', 'INTC', 'INTU', 'ISRG', 'JBHT', 'JD', 'KLAC', 'KHC', 'LBTYK', 'LILA', 'LBTYA', 'QRTEA', 'MELI', 'MAR', 'MAT', 'MDLZ', 'MNST', 'MSFT', 'MU', 'MXIM', 'MYL', 'NCLH', 'NFLX', 'NTES', 'NVDA', 'PAYX', 'BKNG', 'PYPL', 'QCOM', 'REGN', 'ROST', 'SHPG', 'SIRI', 'SWKS', 'SBUX', 'SYMC', 'TSCO', 'TXN', 'TMUS', 'ULTA', 'VIAB', 'VOD', 'VRTX', 'WBA', 'WDC', 'XRAY', 'IDXX', 'LILAK', 'LRCX', 'MCHP', 'ORLY', 'PCAR', 'STX', 'TSLA', 'VRSK', 'WYNN', 'XLNX']
 
 @app.route('/')
 def home():
@@ -77,11 +85,11 @@ def logout():
     return redirect(url_for("home"))
     
 
-@app.route('/dashboard/portfolio')
+@app.route('/dashboard/watchlist')
 @login_required
 def dashboard():
     """ Render Portfolio"""
-    return render_template('dashboard/portfolio.html')
+    return render_template('dashboard/watchlist.html')
     
 @app.route('/dashboard/heatmap')
 @login_required
@@ -89,11 +97,11 @@ def heatmap():
     """ Render Heat Map"""
     return render_template('dashboard/heatmap.html')
     
-@app.route('/dashboard/sectors')
+@app.route('/dashboard/markets')
 @login_required
 def sector():
     """ Render Sectors Page"""
-    return render_template('dashboard/sector.html')
+    return render_template('dashboard/markets.html')
     
 @app.route('/dashboard/analyst')
 @login_required
@@ -105,13 +113,109 @@ def analyst():
 @login_required
 def tech():
     """ Render Technical Analysis Stock Page"""
-    return render_template('dashboard/technical.html')
+    
+    #Initialization
+    form = StockForm()
+    
+    # Default stock selection
+    symbol = 'aapl'
+    
+    if request.method == "POST":
+        if form.validate_on_submit():
+            query = form.stock.data
+            query = query.upper()
+            if query in dow or query in SP500 or query in nasdaq:
+                query = query.lower()
+                symbol = query
+            else:
+                flash("Hmmm, stock symbol now found", "danger")
+            
+    url = "https://api.iextrading.com/1.0/stock/" + symbol + "/batch?types=quote,news,chart&range=1m&last=10"
+    
+    # Retrieve data
+    page = requests.get(url)
+    
+    # Convert to json
+    data = page.json()
+    
+    
+    
+    # Store retrieved data
+    company = data['quote']
+    symbol = company['symbol']
+    name = company['companyName']
+    price = company['latestPrice']
+    open_price = company['open']
+    change = company['change']
+    change_percent = company['changePercent']
+    market_cap = "{:,.2f}".format(company['marketCap'])
+    close = company['close']
+    volume = company['latestVolume']
+    whigh = company['week52High']
+    wlow = company['week52Low']
+    pe_ratio = company['peRatio']
+    
+    # Retrieve settings
+    # user_id = current_user.id
+    # settings = Settings.query.filter_by(user_id = user_id).first()
+    # investor_type = settings.investor_type
+    investor_type = 'Value'
+    return render_template('dashboard/technical.html',form=form,symbol=symbol,name=name,price=price,open_price = open_price,change=change,change_percent=change_percent,market_cap=market_cap,close=close,volume=volume,whigh=whigh,wlow=wlow,pe_ratio=pe_ratio,investor_type=investor_type)
+
 
 @app.route('/dashboard/fundametal')
 @login_required
 def fund():
     """ Render Fundamental Analysis Stock Page"""
-    return render_template('dashboard/fundamental.html')
+    
+    #Initialization
+    form = StockForm()
+    
+    # Default stock selection
+    symbol = 'aapl'
+    
+    if request.method == "POST":
+        if form.validate_on_submit():
+            query = form.stock.data
+            query = query.upper()
+            if query in dow or query in SP500 or query in nasdaq:
+                query = query.lower()
+                symbol = query
+            else:
+                flash("Hmmm, stock symbol now found", "danger")
+            
+    url = "https://api.iextrading.com/1.0/stock/" + symbol + "/batch?types=quote,news,chart&range=1m&last=10"
+    
+    # Retrieve data
+    page = requests.get(url)
+    
+    # Convert to json
+    data = page.json()
+    
+    
+    
+    # Store retrieved data
+    company = data['quote']
+    symbol = company['symbol']
+    name = company['companyName']
+    price = company['latestPrice']
+    open_price = company['open']
+    change = company['change']
+    change_percent = company['changePercent']
+    market_cap = "{:,.2f}".format(company['marketCap'])
+    close = company['close']
+    volume = company['latestVolume']
+    whigh = company['week52High']
+    wlow = company['week52Low']
+    pe_ratio = company['peRatio']
+    
+    # Retrieve settings
+    # user_id = current_user.id
+    # settings = Settings.query.filter_by(user_id = user_id).first()
+    # investor_type = settings.investor_type
+    investor_type = 'Value'
+    return render_template('dashboard/fundamental.html',form=form,symbol=symbol,name=name,price=price,open_price = open_price,change=change,change_percent=change_percent,market_cap=market_cap,close=close,volume=volume,whigh=whigh,wlow=wlow,pe_ratio=pe_ratio,investor_type=investor_type)
+
     
 @app.route('/dashboard/news')
 @login_required
@@ -123,13 +227,9 @@ def news():
 @login_required
 def profile():
     """ Render Profile Page"""
-    return render_template('admin/profile.html')
-
-@app.route('/admin/settings')
-@login_required
-def settings():
-    """ Render Settings Page"""
-    return render_template('admin/settings.html')
+    form = ProfileForm()
+    sform = SettingsForm()
+    return render_template('admin/profile.html',form=form,sform=sform)
     
 @app.route('/admin/help')
 @login_required

@@ -434,3 +434,28 @@ body {
   background-color: #181818 !important;
 }
 
+
+/* Portfolio Page*/
+.portfolio {
+  height: 100%;
+  background-color: #181818 !important;
+}
+
+/* Stock Input*/
+.stock-form{
+    width: 30%;
+    float: right;
+    margin-bottom: 2%;
+}
+
+
+/* Stock Chart*/
+.chart {
+    height: 700px;
+    width: 100%;
+}
+
+
+.stock-title {
+  color: white;
+}

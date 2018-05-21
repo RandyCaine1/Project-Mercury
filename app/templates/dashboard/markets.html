@@ -32,10 +32,10 @@
         
       <!--Navbar Options -->
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Portfolio">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Watchlist">
           <a class="nav-link" href="{{ url_for('dashboard') }}">
             <i class="fa fa-usd" aria-hidden="true"></i>
-            <span class="nav-link-text">Portfolio</span>
+            <span class="nav-link-text">Watchlist</span>
           </a>
         </li>
         
@@ -46,10 +46,10 @@
           </a>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Sectors">
+        <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Markets">
           <a class="nav-link" href="{{ url_for('sector') }}">
             <i class="fa fa-line-chart" aria-hidden="true"></i>
-            <span class="nav-link-text">Sectors</span>
+            <span class="nav-link-text">Markets</span>
           </a>
         </li>
         
@@ -99,7 +99,7 @@
         <!-- Navbar Icons -->
         <li class="nav-item dropdown">
           
-          <!-- User Administration -->
+            <!-- User Administration -->
           <a class="nav-link dropdown-toggle mr-lg-2" id="alertsDropdown" href="#" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
             <i class="fa fa-user-circle-o" aria-hidden="true"> {{ current_user.username }}</i>
           </a>
@@ -117,15 +117,6 @@
             </a>
             
             <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ url_for('settings') }}">
-              <span class="text-dark">
-                <strong>
-                  <i class="fa fa-cog" aria-hidden="true"></i></i> Settings</strong>
-              </span>
-              <div class="dropdown-message small">Change settings</div>
-            </a>
-            
-            <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{ url_for('help_page') }}">
               <span class="text-dark">
                 <strong>
@@ -134,21 +125,20 @@
               <div class="dropdown-message small">Useful tips</div>
             </a>
             
-            <!-- Logout Button-->
+             <!-- Logout Button-->
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" data-toggle="modal" data-target="#exampleModal">
               <span class="text-dark">
                 <strong>
                   <i class="fa fa-fw fa-sign-out" aria-hidden="true"></i>Logout</strong>
               </span>
+              <div class="dropdown-message small"></div>
             </a>
             
-           
           </div>
           
         </li>
         
-       
 
       </ul>
     </div>
@@ -175,6 +165,32 @@
         </div>
       </div>
     </div>
+    
+    
+   
+   <!-- TradingView Widget BEGIN -->
+    <div class="tradingview-widget-container">
+      <div class="tradingview-widget-container__widget"></div>
+      <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-hotlists.js" async>
+      {
+      "exchange": "US",
+      "showChart": true,
+      "locale": "en",
+      "largeChartUrl": "",
+      "width": "100%",
+      "height": "700",
+      "plotLineColorGrowing": "rgba(60, 188, 152, 1)",
+      "plotLineColorFalling": "rgba(255, 74, 104, 1)",
+      "gridLineColor": "rgba(242, 242, 242, 1)",
+      "scaleFontColor": "rgba(218, 221, 224, 1)",
+      "belowLineFillColorGrowing": "rgba(60, 188, 152, 0.05)",
+      "belowLineFillColorFalling": "rgba(255, 74, 104, 0.05)",
+      "symbolActiveColor": "rgba(242, 250, 254, 1)"
+    }
+      </script>
+    </div>
+    <!-- TradingView Widget END -->
+ 
     
     
     <!-- Bootstrap core JavaScript-->

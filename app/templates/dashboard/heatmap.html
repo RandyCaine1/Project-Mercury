@@ -32,10 +32,10 @@
         
       <!--Navbar Options -->
       <ul class="navbar-nav navbar-sidenav" id="exampleAccordion">
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Portfolio">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Watchlist">
           <a class="nav-link" href="{{ url_for('dashboard') }}">
             <i class="fa fa-usd" aria-hidden="true"></i>
-            <span class="nav-link-text">Portfolio</span>
+            <span class="nav-link-text">Watchlist</span>
           </a>
         </li>
         
@@ -46,10 +46,10 @@
           </a>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Sectors">
+        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Markets">
           <a class="nav-link" href="{{ url_for('sector') }}">
             <i class="fa fa-line-chart" aria-hidden="true"></i>
-            <span class="nav-link-text">Sectors</span>
+            <span class="nav-link-text">Markets</span>
           </a>
         </li>
         
@@ -115,16 +115,7 @@
               </span>
               <div class="dropdown-message small">Update your profile</div>
             </a>
-            
-            <div class="dropdown-divider"></div>
-            <a class="dropdown-item" href="{{ url_for('settings') }}">
-              <span class="text-dark">
-                <strong>
-                  <i class="fa fa-cog" aria-hidden="true"></i></i> Settings</strong>
-              </span>
-              <div class="dropdown-message small">Change settings</div>
-            </a>
-            
+          
             <div class="dropdown-divider"></div>
             <a class="dropdown-item" href="{{ url_for('help_page') }}">
               <span class="text-dark">
