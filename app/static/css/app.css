@@ -54,3 +54,15 @@ body {
 .intro {
     margin-top: 200px;
 }
+
+/* About Page */
+.text-white {
+    color: white;
+    margin-bottom: 2%;
+}
+
+.about-list{
+    text-align: center;
+    width: 50%;
+    margin: auto;
+}

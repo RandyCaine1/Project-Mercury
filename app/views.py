@@ -70,9 +70,6 @@ def login():
                 login_user(user)
                 return redirect(url_for("dashboard")) 
                 
-        
-            
-   
     return render_template("login.html", form=form,sform=sform)
     
     
@@ -85,11 +82,61 @@ def logout():
     return redirect(url_for("home"))
     
 
-@app.route('/dashboard/watchlist')
+@app.route('/dashboard/watchlist', methods=["GET", "POST"])
 @login_required
 def dashboard():
-    """ Render Portfolio"""
-    return render_template('dashboard/watchlist.html')
+    """ Render Watchlist"""
+    #Initialization
+    form = StockForm()
+    
+    
+    if request.method == "POST":
+        if form.validate_on_submit():
+            query = form.stock.data
+            print(query)
+            query = query.upper()
+            if query in dow or query in SP500 or query in nasdaq:
+                symbol = query.lower()
+                stock = Stock(symbol=symbol)
+                db.create_all()
+                db.session.add(stock)
+                db.session.commit()
+                
+            else:
+                flash("Hmmm, stock symbol now found", "danger")
+      
+    values = []
+    count = 0
+    stocks = Stock.query.all()  
+    
+    for s in stocks:
+        symbol = s.symbol
+        url = "https://api.iextrading.com/1.0/stock/" + symbol + "/batch?types=quote,news,chart&range=1m&last=10"
+        
+        # Retrieve data
+        page = requests.get(url)
+        
+        # Convert to json
+        data = page.json()
+        
+        # Store retrieved data
+        
+        company = data['quote']
+        symbol = company['symbol']
+        name = company['companyName']
+        price = company['latestPrice']
+        open_price = company['open']
+        change = company['change']
+        change_percent = company['changePercent']
+        close = company['close']
+        whigh = company['week52High']
+        wlow = company['week52Low']
+        
+        values.append([name,symbol,price,change,change_percent,open_price,whigh,wlow,close])
+        # For loop in template isn't working so use count instead
+        count += 1  
+    
+    return render_template('dashboard/watchlist.html',form=form,stocks=values,count=count)
     
 @app.route('/dashboard/heatmap')
 @login_required
@@ -109,7 +156,7 @@ def analyst():
     """ Render AI Analyst Page"""
     return render_template('dashboard/ai.html')
     
-@app.route('/dashboard/technical')
+@app.route('/dashboard/technical', methods=["GET", "POST"])
 @login_required
 def tech():
     """ Render Technical Analysis Stock Page"""
@@ -138,8 +185,6 @@ def tech():
     # Convert to json
     data = page.json()
     
-    
-    
     # Store retrieved data
     company = data['quote']
     symbol = company['symbol']
@@ -163,7 +208,7 @@ def tech():
     return render_template('dashboard/technical.html',form=form,symbol=symbol,name=name,price=price,open_price = open_price,change=change,change_percent=change_percent,market_cap=market_cap,close=close,volume=volume,whigh=whigh,wlow=wlow,pe_ratio=pe_ratio,investor_type=investor_type)
 
 
-@app.route('/dashboard/fundametal')
+@app.route('/dashboard/fundametal', methods=["GET", "POST"])
 @login_required
 def fund():
     """ Render Fundamental Analysis Stock Page"""
@@ -186,12 +231,15 @@ def fund():
             
     url = "https://api.iextrading.com/1.0/stock/" + symbol + "/batch?types=quote,news,chart&range=1m&last=10"
     
+    url2 = "https://api.iextrading.com/1.0/stock/" + symbol + "/earnings"
+    
     # Retrieve data
     page = requests.get(url)
+    page2 = requests.get(url2)
     
     # Convert to json
     data = page.json()
-    
+    data2 = page2.json()
     
     
     # Store retrieved data
@@ -209,12 +257,21 @@ def fund():
     wlow = company['week52Low']
     pe_ratio = company['peRatio']
     
+    
+    # Earnings
+    earn = data2["earnings"][0]
+    yr_change = earn["yearAgoChangePercent"]
+    actualEPS = earn["actualEPS"]
+    estimatedEPS = earn["estimatedEPS"]
+    
+    diff = actualEPS - estimatedEPS
+    
     # Retrieve settings
     # user_id = current_user.id
-    # settings = Settings.query.filter_by(user_id = user_id).first()
+    # settings = Type.query.filter_by(user_id = user_id).first()
     # investor_type = settings.investor_type
     investor_type = 'Value'
-    return render_template('dashboard/fundamental.html',form=form,symbol=symbol,name=name,price=price,open_price = open_price,change=change,change_percent=change_percent,market_cap=market_cap,close=close,volume=volume,whigh=whigh,wlow=wlow,pe_ratio=pe_ratio,investor_type=investor_type)
+    return render_template('dashboard/fundamental.html',form=form,symbol=symbol,name=name,price=price,open_price = open_price,change=change,change_percent=change_percent,market_cap=market_cap,close=close,volume=volume,whigh=whigh,wlow=wlow,pe_ratio=pe_ratio,investor_type=investor_type,yr_change=yr_change,diff=diff)
 
     
 @app.route('/dashboard/news')
@@ -235,7 +292,9 @@ def profile():
 @login_required
 def help_page():
     """ Render Help Page"""
-    return render_template('admin/help.html')
+    form = ContactForm()
+    sform = BugForm()
+    return render_template('admin/help.html',form=form,sform=sform)
    
 # user_loader callback. This callback is used to reload the user object from
 # the user ID stored in the session

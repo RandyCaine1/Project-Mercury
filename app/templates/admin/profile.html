@@ -81,10 +81,12 @@
             
             <form action="/" class = "form" method="post">
                 
-               <div class = "settings-option">
-                   {{ sform.growth.label }}
-                   {{ sform.growth(class='form-control',id = 'growth') }}
-               </div>
+               <div class="field-wrap">
+                <label>
+                  Investor Type
+                </label>
+                  {{ sform.investor_type(class='form-control') }}
+              </div>
               
              
               

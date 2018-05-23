@@ -39,13 +39,6 @@
           </a>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Stock Heat Map">
-          <a class="nav-link" href="{{ url_for('heatmap') }}">
-            <i class="fa fa-fire" aria-hidden="true"></i>
-            <span class="nav-link-text">Stock Heat Map</span>
-          </a>
-        </li>
-        
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Markets">
           <a class="nav-link" href="{{ url_for('sector') }}">
             <i class="fa fa-line-chart" aria-hidden="true"></i>
@@ -64,7 +57,7 @@
         <li class="nav-item active" data-toggle="tooltip" data-placement="right" title="Sectors">
           <a class="nav-link" href="{{ url_for('news') }}">
             <i class="fa fa-line-chart" aria-hidden="true"></i>
-            <span class="nav-link-text">News</span>
+            <span class="nav-link-text">Calendar</span>
           </a>
         </li>
         
@@ -170,13 +163,13 @@
     <!-- TradingView Widget BEGIN -->
     <div class="tradingview-widget-container">
       <div class="tradingview-widget-container__widget"></div>
+      <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/markets/currencies/economic-calendar/" rel="noopener" target="_blank"><span class="blue-text">Economic Calendar</span></a> by TradingView</div>
       <script type="text/javascript" src="https://s3.tradingview.com/external-embedding/embed-widget-events.js" async>
       {
-      "width": "510",
-      "height": "600",
+      "width": "1250",
+      "height": "700",
       "locale": "en",
-      "importanceFilter": "-1,0,1",
-      "currencyFilter": "USD"
+      "importanceFilter": "-1,0,1"
     }
       </script>
     </div>
@@ -186,9 +179,7 @@
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.bundle.min.js"></script>
-  
-    <!-- Custom JS -->
-    <script src="../static/js/app.js"></script>
+
    
   </div>
 </body>

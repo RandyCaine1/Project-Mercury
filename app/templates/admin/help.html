@@ -1,0 +1,96 @@
+<!DOCTYPE>
+
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    
+    
+    <title>Mercury | Stock Analysis</title>
+    <link type = "text/css" rel = "stylesheet" href = "../static/css/login.css">
+    <link type = "text/css" rel = "stylesheet" href = "../static/css/settings.css">
+    <link type = "text/css" rel = "stylesheet" href = "https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Titillium+Web:400,300,600' rel='stylesheet' type='text/css'>
+    <!-- Favicon -->
+    <link rel="shortcut icon" href="{{ url_for('static', filename='favicon.ico') }}">
+</head>
+
+<body>
+    
+  <div class="form">
+      
+      <ul class="tab-group">
+        <li class="tab active"><a href="#signup">Feedback</a></li>
+        <li class="tab"><a href="#login">Bugs</a></li>
+      </ul>
+      
+      <div class="tab-content">
+        <div id="signup">   
+          <h1>Contact Us</h1>
+          
+           <form action="/" class = "form" method="post">
+                {{ form.csrf_token }}
+                
+                <div class="field-wrap">
+                <label>
+                  Subject<span class="req">*</span>
+                </label>
+                {{ form.subject(class='form-control') }}
+              </div>
+              
+              <div class="field-wrap">
+                <label>
+                  Message<span class="req">*</span>
+                </label>
+                {{ form.message(class='form-control') }}
+              </div>
+              
+              
+              <button type="submit" name="submit" class="button button-block">Send</button>
+            </form>
+            
+            <a href = "{{ url_for('dashboard') }}" class="button button-block back-btn"><i class="fa fa-backward" aria-hidden="true"></i> Back to Dashboard</a>
+        </div>
+        
+        <div id="login">   
+            <h1>Report a Bug</h1>
+            
+            <form action="/" class = "form" method="post">
+                {{ sform.csrf_token }}
+                
+                <div class="field-wrap">
+                <label>
+                  Subject<span class="req">*</span>
+                </label>
+                {{ form.subject(class='form-control') }}
+              </div>
+              
+              <div class="field-wrap">
+                <label>
+                  Message<span class="req">*</span>
+                </label>
+                {{ form.message(class='form-control') }}
+              </div>
+              
+              
+              <button type="submit" name="submit" class="button button-block">Send</button>
+            </form>
+            
+            <a href = "{{ url_for('dashboard') }}" class="button button-block back-btn"><i class="fa fa-backward" aria-hidden="true"></i> Back to Dashboard</a>
+
+        </div>
+        
+      </div><!-- tab-content -->
+      
+      <!-- Core JavaScript-->
+      <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+      <script src = "../static/js/login.js"></script>
+</body>
+  
+  
+</html>
+
+      
+</div> <!-- /form -->
+

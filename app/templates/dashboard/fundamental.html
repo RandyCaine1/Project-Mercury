@@ -39,13 +39,6 @@
           </a>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Stock Heat Map">
-          <a class="nav-link" href="{{ url_for('heatmap') }}">
-            <i class="fa fa-fire" aria-hidden="true"></i>
-            <span class="nav-link-text">Stock Heat Map</span>
-          </a>
-        </li>
-        
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Markets">
           <a class="nav-link" href="{{ url_for('sector') }}">
             <i class="fa fa-line-chart" aria-hidden="true"></i>
@@ -64,7 +57,7 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Sectors">
           <a class="nav-link" href="{{ url_for('news') }}">
             <i class="fa fa-line-chart" aria-hidden="true"></i>
-            <span class="nav-link-text">News</span>
+            <span class="nav-link-text">Calendar</span>
           </a>
         </li>
         
@@ -95,6 +88,22 @@
       </ul>
       
       <ul class="navbar-nav ml-auto">
+        <!-- Stock Search Bar-->
+       <li>
+         <form class = "stock-form" action="{{ url_for('fund')}}" method="post">
+            <div class = "join-form">
+                 {{ form.csrf_token }}
+                <div class="input-group">
+                    {{ form.stock(class='form-control', placeholder="Enter Stock e.g. AAPL") }}
+                     <span class="input-group-append">
+                        <button class="btn" type="submit">
+                          <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                      </span>
+                 </div>
+            </div>
+          </form>
+        </li>
        
         <!-- Navbar Icons -->
         <li class="nav-item dropdown">
@@ -167,24 +176,9 @@
     </div>
     
     
-    <h1 class = "page-header text-center stock-title">{{symbol}} - {{name}} - ${{price}}</h1>
-    
-    <section class = "container">
-      
-      
-      <!--{% include 'flash_messages.html' %}-->
-      <form class = "stock-form" action="{{ url_for('profile')}}" method="post">
-          <div class = "join-form">
-               {{ form.csrf_token }}
-              <div class="input-group-btn">
-                  {{ form.stock(class='form-control', placeholder="Search Stocks e.g. AAPL") }}
-               </div>
-          </div>
-      </form>
-      
-     </section>
+     <h1 class = "page-header text-center stock-title">{{symbol}} - {{name}} - ${{price}}</h1>
      
-     <section class = "chart">
+        <section class = "chart">
         
           <!-- TradingView Widget BEGIN -->
           <div class="tradingview-widget-container">
@@ -227,36 +221,71 @@
               
     </section>
      
-    <section class = "chart"> 
-      <!-- TradingView Widget BEGIN -->
-        <div class="tradingview-widget-container">
-          <div id="tradingview_14209"></div>
-          <div class="tradingview-widget-copyright"><a href="https://www.tradingview.com/symbols/NASDAQ-AAPL/" rel="noopener" target="_blank"><span class="blue-text">AAPL Data</span></a> by TradingView</div>
-          <script type="text/javascript" src="https://s3.tradingview.com/tv.js"></script>
-          <script type="text/javascript">
-          new TradingView.widget(
-          {
-          "width": 1200,
-          "height": 610,
-          "symbol": "NASDAQ:AAPL",
-          "interval": "D",
-          "theme": "Dark",
-          "locale": "en",
-          "toolbar_bg": "#f1f3f6",
-          "fundamental": "Script$EDGR_DIVIDEND_YIELD_V2@tv-scripting",
-          "percentage": true,
-          "hide_top_toolbar": true,
-          "hide_side_toolbar": true,
-          "allow_symbol_change": false,
-          "save_image": false,
-          "container_id": "tradingview_14209"
-        }
-          );
-          </script>
-        </div>
-    <!-- TradingView Widget END -->
     
-    </section>
+    
+    <table class="table table-hover table-dark">
+      <thead>
+        <tr>
+          <th scope="col">Metric</th>
+          <th scope="col">Value</th>
+          <th scope="col">Recommendation</th>
+          <th scope="col">Rationale</th>
+        </tr>
+      </thead>
+      <tbody>
+        
+          <!-- Value -->
+          
+          <!--P/E Ratio-->
+          {% if pe_ratio <= 10 %}
+          <tr>
+            <th scope="row">P/E Ratio</th>
+            <td>{{ pe_ratio }}</td>
+            <td class = "rec-btn">
+              <button class = "btn btn-success">Buy</button>
+            </td>
+            <td>Stock has a P/E Ratio under 10%.The stock is cheap</td>
+          </tr>
+          
+          {% else %}
+          <tr>
+            <th scope="row">P/E Ratio</th>
+            <td>{{ pe_ratio }}</td>
+            <td class = "rec-btn">
+              <button class = "btn btn-danger">Sell</button>
+            </td>
+            <td>Stock has a P/E Ratio over 10% so its is expensive</td>
+          </tr>
+          {% endif %}
+          
+          
+          <!-- Growth -->
+          
+          <!--EPS Beat-->
+          {% if diff >= 0 %}
+          <tr>
+            <th scope="row">EPS Differential (Actual vs Estimate)</th>
+            <td>{{ diff }}</td>
+            <td class = "rec-btn">
+              <button class = "btn btn-success">Buy</button>
+            </td>
+            <td>Stock beat earnings espectations</td>
+          </tr>
+          
+          {% else %}
+          <tr>
+            <th scope="row">EPS Differential (Actual vs Estimate)</th>
+            <td>{{ diff }}</td>
+            <td class = "rec-btn">
+              <button class = "btn btn-danger">Sell</button>
+            </td>
+            <td>Stock didn't beat earnings espectations</td>
+          </tr>
+          {% endif %}
+          
+          
+      </tbody>
+  </table>
     
     <!-- Bootstrap core JavaScript-->
     <script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>

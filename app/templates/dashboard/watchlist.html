@@ -39,13 +39,6 @@
           </a>
         </li>
         
-        <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Stock Heat Map">
-          <a class="nav-link" href="{{ url_for('heatmap') }}">
-            <i class="fa fa-fire" aria-hidden="true"></i>
-            <span class="nav-link-text">Stock Heat Map</span>
-          </a>
-        </li>
-        
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Markets">
           <a class="nav-link" href="{{ url_for('sector') }}">
             <i class="fa fa-line-chart" aria-hidden="true"></i>
@@ -64,7 +57,7 @@
         <li class="nav-item" data-toggle="tooltip" data-placement="right" title="Sectors">
           <a class="nav-link" href="{{ url_for('news') }}">
             <i class="fa fa-line-chart" aria-hidden="true"></i>
-            <span class="nav-link-text">News</span>
+            <span class="nav-link-text">Calendar</span>
           </a>
         </li>
         
@@ -95,6 +88,23 @@
       </ul>
       
       <ul class="navbar-nav ml-auto">
+        
+      <!-- Stock Search Bar-->
+       <li>
+         <form class = "stock-form" action="{{ url_for('dashboard')}}" method="post">
+            <div class = "join-form">
+                 {{ form.csrf_token }}
+                <div class="input-group">
+                    {{ form.stock(class='form-control', placeholder="Enter Stock e.g. AAPL") }}
+                     <span class="input-group-append">
+                        <button class="btn" type="submit">
+                          <i class="fa fa-plus" aria-hidden="true"></i>
+                        </button>
+                      </span>
+                 </div>
+            </div>
+          </form>
+        </li>
        
         <!-- Navbar Icons -->
         <li class="nav-item dropdown">
@@ -138,8 +148,6 @@
           </div>
           
         </li>
-        
-       
 
       </ul>
     </div>
@@ -249,32 +257,36 @@
     </div>
     <!-- TradingView Widget END -->
     
-   <table class="table table-hover table-dark">
-      <thead>
-        <tr>
-          <th scope="col">Name</th>
-          <th scope="col">Value</th>
-          <th scope="col">Change</th>
-          <th scope="col">% Change</th>
-          <th scope="col">Open</th>
-          <th scope="col">High</th>
-          <th scope="col">Low</th>
-          <th scope="col">Prev</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <th scope="row">Hey</th>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-          <td>1</td>
-        </tr>
-      </tbody>
-  </table>
+  <!-- <table class="table table-hover table-dark">-->
+  <!--    <thead>-->
+  <!--      <tr>-->
+  <!--        <th scope="col">Name</th>-->
+  <!--        <th scope="col">Symbol</th>-->
+  <!--        <th scope="col">Price</th>-->
+  <!--        <th scope="col">Change</th>-->
+  <!--        <th scope="col">% Change</th>-->
+  <!--        <th scope="col">Open</th>-->
+  <!--        <th scope="col">Close</th>-->
+  <!--        <th scope="col">52W High</th>-->
+  <!--        <th scope="col">52W Low</th>-->
+  <!--      </tr>-->
+  <!--    </thead>-->
+  <!--    <tbody>-->
+  <!--      <% for stock in stocks %>-->
+  <!--        <tr>-->
+  <!--          <th scope="row">{{ stocks[0] }}</th>-->
+  <!--          <td>1</td>-->
+  <!--          <td>1</td>-->
+  <!--          <td>1</td>-->
+  <!--          <td>1</td>-->
+  <!--          <td>1</td>-->
+  <!--          <td>1</td>-->
+  <!--          <td>1</td>-->
+  <!--          <td>1</td>-->
+  <!--        </tr>-->
+  <!--      <% endfor %>-->
+  <!--    </tbody>-->
+  <!--</table>-->
   
   
       <!-- TradingView Widget BEGIN -->

@@ -15,8 +15,7 @@ class LoginForm(FlaskForm):
     password = PasswordField('Password', validators=[InputRequired()])
     
 class StockForm(FlaskForm):
-    stock = StringField('Stock', validators=[InputRequired()])
-    
+    stock = StringField('Symbol', validators=[InputRequired()])
 
 class ProfileForm(FlaskForm):
     firstname = StringField('Firstname', validators=[InputRequired()])
@@ -27,12 +26,13 @@ class ProfileForm(FlaskForm):
     
     
 class SettingsForm(FlaskForm):
-    growth = BooleanField('Growth')
-    value = BooleanField()
-    daytrader = BooleanField()
-    swingtrader = BooleanField()
-    position = BooleanField()
+    investor_type = StringField('Investing Style: Growth or Value', validators=[InputRequired()])
     
+class ContactForm(FlaskForm):
+    subject = StringField('Subject', validators=[InputRequired()])
+    message = StringField('Message', validators=[InputRequired()])
     
-    
+class BugForm(FlaskForm):
+    subject = StringField('Subject', validators=[InputRequired()])
+    message = StringField('Message', validators=[InputRequired()])
     
